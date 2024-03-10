@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot name="mobile_robot_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:property name="PI" value="3.14"/>
+
+<!-- *********************************************************************** -->
+<!-- Cilinder inertial -->
+<xacro:macro name="cylinder_inertia" params ="m r h">
+  <inertial>
+   <mass value="${m}"/>
+   <inertia ixx="${m*(3*r*r+h*h)/12}"  ixy="0.0" ixz="0.0"
+            iyy="${m*(3*r*r+h*h)/12}"  iyz="0.0" izz="${m*r*r/2}"/>
+   </inertial>
+</xacro:macro>
+
+<!-- *********************************************************************** -->
+<!-- Base inertial matrix -->
+<xacro:macro name= "inertial_matrix" params="mass">
+  <inertial>
+    <mass value="${mass}"/>
+    <inertia 
+        ixx="1.0" ixy="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0" ixz="0.0"/>
+   </inertial>
+ </xacro:macro>
+
+<!-- *********************************************************************** -->
+<!--Transmission front -->
+<xacro:macro name="Front_transmission" params="joint_name">
+    <transmission name="${joint_name}_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${joint_name}">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${joint_name}_actuator">
+          <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+</xacro:macro>
+
+<!-- *********************************************************************** -->
+<!-- Transmission back -->
+<xacro:macro name="Back_transmission" params="joint_name">
+    <transmission name="${joint_name}_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${joint_name}">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${joint_name}_actuator">
+          <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+</xacro:macro>
+</robot>

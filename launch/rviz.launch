@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+
+<!-- *********************************************************************** -->
+<arg name="model" default="$(find custom_ackermann_steering_controller_ros)/urdf/main.xacro"/>
+<arg name="rvizconfig" default="$(find custom_ackermann_steering_controller_ros)/rviz/base.rviz"/>
+
+<arg name="joint_state" default="$(find custom_ackermann_steering_controller_ros)/config/robot_joint_state.yaml"/>
+
+<!-- *********************************************************************** -->
+<!-- Load the URDF into the ROS Parameter Server -->
+<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+
+<!-- Launch rviz -->
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)"/>
+
+<!-- *********************************************************************** -->
+<!-- Convert joint states to TF transforms for rviz, etc -->
+<node 
+    name="robot_state_publisher" 
+    pkg="robot_state_publisher" 
+    type="robot_state_publisher">
+</node>
+
+<!-- <node 
+    name="joint_state_publisher_gui" 
+    pkg="joint_state_publisher_gui" 
+    type="joint_state_publisher_gui" >
+</node> -->
+
+<node 
+    name="joint_state_publisher" 
+    pkg="joint_state_publisher" 
+    type="joint_state_publisher" >
+</node>
+
+</launch>
+
+
+    

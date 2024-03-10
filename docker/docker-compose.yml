@@ -1,0 +1,16 @@
+version: '4'
+
+name: mobile-robot-base-ros1
+
+services:
+  ros-noetic-master:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    working_dir: /workspace        
+    volumes:
+      - ../:/workspace/src/mobile_robot_base_ros1
+    env_file:
+      - ./.env
+    tty: true
+

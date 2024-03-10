@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<sdf version="1.4">
+  <world name="default">
+    <scene>
+      <ambient>0 0 0 1</ambient>
+      <shadows>0</shadows>
+      <grid>0</grid>
+      <background>0.7 0.7 0.7 1</background>
+    </scene>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://laberint_ground</uri>
+    </include>
+  </world> 
+</sdf>

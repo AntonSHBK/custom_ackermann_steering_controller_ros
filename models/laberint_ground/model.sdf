@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <model name="laberint_ground">
+      <pose>0.0 0.0 -0.1 0 0 0</pose>
+      <static>1</static>
+      <link name="laberint_ground_link">
+        <collision name="ground_coll">
+          <geometry>
+            <box>
+              <size>50 50 0.1</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name="ground_vis">
+          <geometry>
+            <box>
+              <size>30 30 .1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://laberint_ground/materials/scripts</uri>
+              <uri>file://laberint_ground/materials/textures</uri>
+              <name>laberint_ground</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+</sdf>

@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<robot name="ackermann_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- *********************************************************************** -->
+<!-- Include xacro-->
+<xacro:include filename="$(find custom_ackermann_steering_controller_ros)/urdf/common_macro.xacro" />
+<xacro:include filename="$(find custom_ackermann_steering_controller_ros)/urdf/corpus.xacro" />
+<xacro:include filename="$(find custom_ackermann_steering_controller_ros)/urdf/wheel.xacro" />
+
+<!-- *********************************************************************** -->
+<!-- constants -->
+<xacro:property name="PI" value="3.14"/>
+
+<xacro:property name="corpus_len" value="1.0"/>
+<xacro:property name="corpus_width" value="0.5"/>
+<xacro:property name="corpus_height" value="0.2"/>
+<xacro:property name="corpus_mass" value="5"/>
+
+<xacro:property name="wheel_radius" value="0.15"/>
+<xacro:property name="wheel_width" value="0.08"/>
+<xacro:property name="wheel_mass" value="0.5"/>
+
+<xacro:property name="angle_wheel_limit" value="${PI/4}"/>
+
+<!-- *********************************************************************** -->
+
+<xacro:corpus 
+    link_name="base_link" 
+    length="${corpus_len}" 
+    width="${corpus_width}" 
+    height="${corpus_height}" 
+    mass="${corpus_mass}" />
+
+<!-- *********************************************************************** -->
+
+<xacro:wheel 
+    link_name="front_left_wheel"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<xacro:wheel 
+    link_name="front_right_wheel"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<xacro:wheel 
+    link_name="rear_left_wheel"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<xacro:wheel 
+    link_name="rear_right_wheel"
+    radius="${wheel_radius}"
+    length="${wheel_width}"
+    mass="${wheel_mass}"/>
+
+<!-- *********************************************************************** -->
+
+
+  <!-- Суставы для соединения передних колес с корпусом -->
+  <joint name="front_left_wheel_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <origin xyz="0.25 0.3 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${-angle_wheel_limit}" upper="${angle_wheel_limit}" effort="1000" velocity="5"/>
+  </joint>
+
+  <joint name="front_right_wheel_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="front_right_wheel"/>
+    <origin xyz="0.25 -0.3 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="${-angle_wheel_limit}" upper="${angle_wheel_limit}" effort="1000" velocity="5"/>
+  </joint>
+
+  <!-- Суставы для соединения задних колес с корпусом (без поворота) -->
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel"/>
+    <origin xyz="-0.25 0.3 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel"/>
+    <origin xyz="-0.25 -0.3 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- Трансмиссия для переднего левого управляемого колеса -->
+  <xacro:Front_transmission joint_name="front_left_wheel_joint"/>
+      
+  <!-- Трансмиссия для переднего правого управляемого колеса -->
+  <xacro:Front_transmission joint_name="front_right_wheel_joint"/>
+  
+  <!-- Трансмиссия для заднего левого ведущего колеса -->
+  <xacro:Back_transmission joint_name="rear_left_wheel_joint"/>
+
+  <!-- Трансмиссия для заднего правого ведущего колеса -->
+  <xacro:Back_transmission joint_name="rear_right_wheel_joint"/>   
+
+  <gazebo reference="front_left_wheel">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+
+  <gazebo reference="front_right_wheel">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+
+  <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>

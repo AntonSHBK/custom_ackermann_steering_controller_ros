@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+
+<!-- *********************************************************************** -->
+<!-- These are the arguments you can pass this launch file, for example paused:=true -->
+<arg name="paused" default="true"/>
+<arg name="use_sim_time" default="true"/>
+<arg name="gui" default="true"/>
+<arg name="headless" default="false"/>
+<arg name="debug" default="false"/>
+
+<arg name="model" default="$(find custom_ackermann_steering_controller_ros)/urdf/main.xacro"/>	
+<arg name="world" default="$(find custom_ackermann_steering_controller_ros)/world/empty_world.world" />
+
+<!-- *********************************************************************** -->
+<!-- We resume the logic in empty_world.launch -->
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="world_name" value="$(arg world)" />
+	<arg name="debug" value="$(arg debug)" />
+	<arg name="gui" value="$(arg gui)" />
+	<arg name="paused" value="$(arg paused)" />
+	<arg name="headless" value="$(arg headless)" />
+	<arg name="use_sim_time" value="$(arg use_sim_time)" />
+</include>
+
+<!-- *********************************************************************** -->
+<!-- Load the URDF into the ROS Parameter Server -->
+<param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
+
+<!-- *********************************************************************** -->
+<!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+<node name="urdf_spawner" 
+	pkg="gazebo_ros" 
+	type="spawn_model" 
+	respawn="false" 
+	output="screen"
+	args="-x 0.0
+		-y 0.0
+		-z 0.5   
+		-unpause 
+		-urdf 
+		-model mobile_robot_base 
+		-param robot_description"/>
+		
+</launch>
