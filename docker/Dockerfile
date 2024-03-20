@@ -11,7 +11,7 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
     ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 # set work directory
-RUN mkdir /workspace/src/mobile_robot_base_ros1 -p
+RUN mkdir /workspace/src/custom_ackermann_steering_controller_ros -p
 WORKDIR /workspace
 
 # copy project

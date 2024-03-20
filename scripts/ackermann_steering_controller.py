@@ -15,7 +15,7 @@ class AckermannSteeringController:
         # Загрузка параметров из конфигурационного файла
         self.wheel_base = rospy.get_param(self.name+'/wheel_base', 1.0)
         self.cmd_vel_topic = rospy.get_param(self.name+'/cmd_vel_topic', '/cmd_vel')
-        # self.steering_angle_topic = rospy.get_param(self.name+'/steering_angle_topic', '/steering_angle')
+        self.drive_velocity_topic = rospy.get_param(self.name+'/drive_velocity_topic', '/drive_velocity')
         self.wheel_track = rospy.get_param(self.name+'/wheel_track', 0.5)
         self.max_steering_angle = rospy.get_param(self.name+'/max_steering_angle', 0.7854)
 
@@ -23,10 +23,14 @@ class AckermannSteeringController:
         rospy.Subscriber(self.cmd_vel_topic, Twist, self.cmd_vel_callback)
         
         # Publishers для отправки команд на контроллеры колес
-        self.front_left_wheel_pub = rospy.Publisher(self.name+'/front_left_wheel_position_controller/command', Float64, queue_size=1)
-        self.front_right_wheel_pub = rospy.Publisher(self.name+'/front_right_wheel_position_controller/command', Float64, queue_size=1)
-        self.rear_left_wheel_pub = rospy.Publisher(self.name+'/rear_left_wheel_velocity_controller/command', Float64, queue_size=1)
-        self.rear_right_wheel_pub = rospy.Publisher(self.name+'/rear_right_wheel_velocity_controller/command', Float64, queue_size=1)
+        self.front_left_wheel_pub = rospy.Publisher(
+            self.name+'/front_left_wheel_position_controller/command', Float64, queue_size=1)
+        self.front_right_wheel_pub = rospy.Publisher(
+            self.name+'/front_right_wheel_position_controller/command', Float64, queue_size=1)
+        self.rear_left_wheel_pub = rospy.Publisher(
+            self.name+'/rear_left_wheel_velocity_controller/command', Float64, queue_size=1)
+        self.rear_right_wheel_pub = rospy.Publisher(
+            self.name+'/rear_right_wheel_velocity_controller/command', Float64, queue_size=1)
 
     def cmd_vel_callback(self, data):
         # Получение линейной скорости и угловой скорости

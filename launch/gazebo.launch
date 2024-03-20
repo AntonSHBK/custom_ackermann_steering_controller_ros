@@ -11,6 +11,13 @@
 
 <arg name="model" default="$(find custom_ackermann_steering_controller_ros)/urdf/main.xacro"/>	
 <arg name="world" default="$(find custom_ackermann_steering_controller_ros)/world/empty_world.world" />
+<arg name="ackermann_steering" default="$(find custom_ackermann_steering_controller_ros)/config/ackermann_steering_config.yaml"/>
+<!-- <arg name="pid_controllers" default="$(find custom_ackermann_steering_controller_ros)/config/pid_params.yaml"/> -->
+
+<!-- *********************************************************************** -->
+<!-- Load joint controller configuration from YAML file to parameter server -->
+<rosparam file="$(arg ackermann_steering)" command="load"/>
+<!-- <rosparam file="$(arg pid_controllers)" command="load"/> -->
 
 <!-- *********************************************************************** -->
 <!-- We resume the logic in empty_world.launch -->
@@ -39,7 +46,24 @@
 		-z 0.5   
 		-unpause 
 		-urdf 
-		-model mobile_robot_base 
+		-model name_robot
 		-param robot_description"/>
+
+<!-- *********************************************************************** -->
+<!-- Load the controllers -->
+<!-- Run robot_state_publisher for plicate state and transformation joints -->
+<node 
+name="controller_manager" 
+pkg="controller_manager" 
+type="controller_manager" 
+respawn="false" 
+output="screen" 
+args="
+	spawn 
+	/ackermann_steering_controller/joint_state_controller 
+	/ackermann_steering_controller/front_left_wheel_position_controller 
+	/ackermann_steering_controller/front_right_wheel_position_controller 
+	/ackermann_steering_controller/rear_left_wheel_velocity_controller 
+	/ackermann_steering_controller/rear_right_wheel_velocity_controller" />
 		
 </launch>

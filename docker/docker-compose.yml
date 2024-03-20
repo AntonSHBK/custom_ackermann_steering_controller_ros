@@ -1,6 +1,6 @@
 version: '4'
 
-name: mobile-robot-base-ros1
+name: custom-ackermann-steering-controller-ros
 
 services:
   ros-noetic-master:

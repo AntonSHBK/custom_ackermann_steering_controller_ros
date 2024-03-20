@@ -1,11 +1,16 @@
 ackermann_steering_controller:
+  # Параметры ros_control
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
   wheel_base: 0.5 # Расстояние между передним и задним мостом
   wheel_track: 0.5 # Расстояние между колёсами на оси
   max_steering_angle: 0.7854 # Максимальный угол поворота колёс в радианах
 
   cmd_vel_topic: "/cmd_vel" # Топик для подписки на команды управления
   steering_angle_topic: "/steering_angle" # Топик для публикации угла поворота
-
+  drive_velocity_topic: "/drive_velocity"
 
   # Контроллеры для управляемых передних колес
   front_left_wheel_position_controller:
