@@ -4,6 +4,7 @@ In this paper, we consider an example of creating simulations of a model of a fo
 
 ## [Russian description](RU.md)
 
+## [Видео YouTube](https://www.youtube.com/watch?v=F9TGboiuFvM&t=59s)
 
 <img src="imgs/rviz_1.jpg" alt="Привью" height="400">
 <img src="imgs/rviz_gazebo_1.gif" alt="GIF_Move" height="400">
