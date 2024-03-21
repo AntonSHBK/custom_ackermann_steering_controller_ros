@@ -9,7 +9,7 @@ services:
       dockerfile: ./docker/Dockerfile
     working_dir: /workspace        
     volumes:
-      - ../:/workspace/src/mobile_robot_base_ros1
+      - ../:/workspace/src/custom_ackermann_steering_controller_ros
     env_file:
       - ./.env
     tty: true

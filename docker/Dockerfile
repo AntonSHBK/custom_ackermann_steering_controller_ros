@@ -15,7 +15,7 @@ RUN mkdir /workspace/src/custom_ackermann_steering_controller_ros -p
 WORKDIR /workspace
 
 # copy project
-# COPY . /workspace/src/tractor_mobile_platform/
+COPY . /workspace/src/custom_ackermann_steering_controller_ros/
 
 # Additional commands (installing dependencies)
 RUN apt-get update && \
@@ -59,12 +59,6 @@ RUN apt-get update && \
     git \
     tmux \
     tree 
-
-
-# install python dependencies
-COPY ../requirements.txt /tmp/requirements.txt
-RUN pip install --upgrade pip
-RUN pip install -r /tmp/requirements.txt
 
 # added ros source
 RUN echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
