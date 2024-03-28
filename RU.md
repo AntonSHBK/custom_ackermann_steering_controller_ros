@@ -358,7 +358,7 @@ __В робототехнике__
     mass="${wheel_mass}"/>
 
 <!-- Суставы для соединения передних колес с корпусом -->
-    <joint name="front_left_wheel_joint" type="revolute">
+<joint name="front_left_wheel_joint" type="revolute">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
     <origin xyz="0.25 0.3 0" rpy="0 0 0"/>
@@ -389,7 +389,6 @@ __В робототехнике__
     <axis xyz="0 1 0"/>
 </joint>
 </robot>
-
 ```
 
 Здесь мы описали звенья и соединения (взаимное расположение звеньев). При этом мы использовали переменные, это позволяет гибко и быстро выполнять конфигурирование проекта.
@@ -474,8 +473,7 @@ __В робототехнике__
 - [ROS Tutorial: Control the UR5 robot with ros_control – How to tune a PID Controller](https://roboticscasual.com/ros-tutorial-control-the-ur5-robot-with-ros_control-tuning-a-pid-controller/)
 
 После добавления соединений и трансмиссий в `urdf` (в нашем случае `xacro`), необходимо настроить параметры для `ros_control` в `YAML` конфигурационном файле. Чтобы настроить `ros_control`, нужно создать конфигурационный файл `YAML` (обычно его располагают в директории `config`), который является стандартом для проектов с использованием `ROS`. Конфигурационны файл определяет контроллеры для каждого колеса, а также содержит переменные, необходимые для расчётов, таких как: расстояние между передним и задним мостом (`wheel_base`), расстояние между центрами колёс на одной оси (`wheel_track`), наименования "топиков" для подписки и публикации и другие настраиваемые параметры. Можно туда же включить любые настраиваемые параметры, что увеличит гибкость конфигурации.
-Создаём файл
- `ackermann_steering_config.yaml` в директории `config. 
+Создаём файл `ackermann_steering_config.yaml` в директории `config. 
 
 ```yaml
 ackermann_steering_controller:
@@ -614,7 +612,6 @@ if __name__ == '__main__':
         rospy.spin()
     except rospy.ROSInterruptException:
         pass
-
 ```
 
     Примечание: не забудьте сделать скрипт исполняемым, если будете запускать скрипт вручную, несовместно с `rosrun`:
