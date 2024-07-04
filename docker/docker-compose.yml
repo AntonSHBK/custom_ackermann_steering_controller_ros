@@ -1,5 +1,3 @@
-version: '4'
-
 name: custom-ackermann-steering-controller-ros
 
 services:
